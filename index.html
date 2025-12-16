@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>BGUARD Lucky Gift</title>
@@ -28,7 +28,7 @@ body {
 
 .logo {
   width: 90px;
-  margin-bottom: 12px;
+  margin-bottom: 11px;
 }
 
 h1 {
@@ -62,21 +62,21 @@ h2 {
 <body>
 
 <div class="card" id="result">
-  <p>Memproses hadiah...</p>
+  <p>Processing your gift...</p>
 </div>
 
 <script>
 const CLAIM_KEY = "bguard_claimed";
 
-// GANTI dengan URL Google Apps Script Web App
-const API_URL = "https://script.google.com/macros/s/AKfycbzm80PTM0RcdepbBiDLfG3JThqiflVjkvjkO5lQJY4XRMKzy5khy-McELt_oPy0jR1r/exec";
+// REPLACE with Google Apps Script Web App URL
+const API_URL = "PASTE_URL_WEB_APP_DI_SINI";
 
 if (localStorage.getItem(CLAIM_KEY)) {
   document.getElementById("result").innerHTML = `
     <img src="logo-bguard.png" class="logo">
-    <h1>Terima Kasih 🤍</h1>
-    <p class="warning">Anda sudah pernah mendapatkan hadiah.</p>
-    <p class="note">Silakan kunjungi booth BGUARD</p>
+    <h1>Thank You 🤍</h1>
+    <p class="warning">You have already received a giveaway.</p>
+    <p class="note">Please visit <strong>BGUARD Booth No. 70</strong></p>
   `;
 } else {
   fetch(API_URL)
@@ -85,23 +85,27 @@ if (localStorage.getItem(CLAIM_KEY)) {
       if (data.status === "empty") {
         document.getElementById("result").innerHTML = `
           <img src="logo-bguard.png" class="logo">
-          <h1>Hadiah Habis</h1>
-          <p class="warning">Terima kasih atas partisipasinya</p>
+          <h1>Giveaway Unavailable</h1>
+          <p class="warning">All giveaways have been claimed.</p>
+          <p class="note">Thank you for visiting <strong>BGUARD Booth No. 70</strong></p>
         `;
       } else {
         localStorage.setItem(CLAIM_KEY, "yes");
         document.getElementById("result").innerHTML = `
           <img src="logo-bguard.png" class="logo">
-          <h1>🎉 Selamat!</h1>
-          <p>Anda mendapatkan hadiah:</p>
+          <h1>🎉 Congratulations!</h1>
+          <p>You have won:</p>
           <div class="gift">${data.hadiah}</div>
-          <p class="note">Tunjukkan layar ini ke booth BGUARD no.70 </p>
+          <p class="note">
+            Please show this screen to our staff at<br>
+            <strong>BGUARD Booth No. 70</strong>
+          </p>
         `;
       }
     })
     .catch(() => {
       document.getElementById("result").innerHTML =
-        "<p>Terjadi kesalahan koneksi</p>";
+        "<p>Connection error. Please try again.</p>";
     });
 }
 </script>
